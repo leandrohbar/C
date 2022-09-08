@@ -1,0 +1,42 @@
+#include <stdio.h>
+#include <cs50.h>
+
+int main(void)
+{
+    //get a pyramid height from the user
+    int n;  
+    
+    do
+    {
+        n = get_int("pyramid height: ");
+    }
+    while (n > 8 || n < 1);
+    
+    //prompt the widht
+    for (int width = 0; width < n; width++)
+    {
+        //print the space to the left
+        for (int space = n - (width + 1); space > 0; space--)
+        {
+            printf(" ");
+               
+        }
+        
+        //print the dashs to the left
+        for (int dash = -1; dash < width; dash++)
+        {
+            printf("#");
+        }
+        
+        //print the 2 spaces
+        printf("  ");
+        
+        //print the dash to the right   
+        for (int dash = -1; dash < width; dash++)
+        {
+            printf("#");
+        }
+        
+        printf("\n");
+}
+}
