@@ -1,0 +1,104 @@
+#include <stdio.h>
+#include <cs50.h>
+#include <math.h>
+
+int main(void)
+{
+    //get a number from the user
+    long number;
+    
+    do
+    {
+        number = get_long("Credit card number: ");
+    }
+    
+    while (number < 0);
+    
+    //get the length
+    int len = 0;
+    long number_c = number;
+    
+    while (number_c > 0)
+    {
+        number_c /= 10;
+        len++;
+    }
+   
+    //check if the number is valid
+    if (len != 13 && len != 15 && len != 16)
+    {
+        printf ("INVALID\n");
+        return 0;
+    } 
+    
+    //check the sum
+    number_c = number;
+    int current;
+    int total = 0;
+    bool underlined = false;
+    
+    while (number_c > 0)
+    { 
+        current = number_c % 10;
+        number_c /=10;
+        
+        if (underlined) 
+        {
+            current *=2;
+            
+            if (current >= 10)
+            {
+                total += current %10;
+                total +=1;
+            }
+            else
+            {
+                total += current;
+            }
+
+            underlined = false;
+        }
+        else {
+            total += current;
+            underlined = true;
+        }
+    }
+    
+    if (total % 10 != 0)
+    {
+        printf ("INVALID\n");
+        return 0;
+    } 
+    
+    //check the brand of the card
+    number_c = number;
+    int firsttwo;
+    
+    for (int i = 0; i < len - 2; i++)
+    {
+        number_c /=10;
+    }
+    firsttwo = number_c;
+    
+    //printf american express
+    if (len == 15 && (firsttwo == 34 || firsttwo == 37))
+    {
+        printf ("AMEX\n");
+    }
+    
+    //printf master card
+    else if (len == 16 && (firsttwo == 51 || firsttwo == 52 || firsttwo == 53 || firsttwo == 54 || firsttwo == 55))
+    {
+        printf ("MASTERCARD\n");
+    }
+    
+    //printf visa
+    else if (firsttwo /10 == 4 && (len == 13 || len == 16))
+    {
+        printf ("VISA\n");
+    }
+    else 
+    {
+        printf ("INVALID\n");
+    }    
+}
